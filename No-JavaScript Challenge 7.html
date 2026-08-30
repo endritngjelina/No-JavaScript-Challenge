@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Morgan | Senior Frontend Engineer</title>
+    <meta name="description" content="Senior Frontend Engineer specializing in performance optimization, accessibility, and scalable web applications.">
+    <meta name="keywords" content="frontend engineer, web developer, performance optimization, accessibility, HTML, CSS, JavaScript">
+    
+    <!-- Preload critical fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%232563eb'/%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%232563eb'/%3E%3C/svg%3E">
+    
+    <style>
+        /* CSS Custom Properties for Design System */
+        :root {
+            --primary-color: #4285F4; /* Google blue */
+            --primary-dark: #3367D6;
+            --secondary-color: #34A853; /* Google green */
+            --accent-color: #FBBC05; /* Google yellow */
+            --error-color: #EA4335; /* Google red */
+            --text-primary: #202124; /* Google gray */
+            --text-secondary: #5F6368;
+            --text-muted: #70757A;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #DADCE0;
+            --success: #34A853;
+            --warning: #FBBC05;
+            --error: #EA4335;
+            
+            --font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-family-roboto: 'Roboto', sans-serif;
+            --font-family-mono: 'JetBrains Mono', Monaco, 'Cascadia Code', monospace;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(60,64,67,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(60,64,67,0.15), 0 2px 4px -2px rgba(60,64,67,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(60,64,67,0.15), 0 4px 6px -4px rgba(60,64,67,0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(60,64,67,0.15), 0 8px 10px -6px rgba(60,64,67,0.1);
+            
+            --border-radius-sm: 4px;
+            --border-radius-md: 8px;
+            --border-radius-lg: 12px;
+            --border-radius-xl: 16px;
+            
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: #E8EAED;
+                --text-secondary: #9AA0A6;
+                --text-muted: #BABCBE;
+                --background: #202124;
+                --surface: #303134;
+                --border: #5F6368;
+                --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.3);
+                --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.25), 0 2px 4px -2px rgba(0,0,0,0.25);
+                --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.25), 0 4px 6px -4px rgba(0,0,0,0.25);
+                --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.25), 0 8px 10px -6px rgba(0,0,0,0.25);
+            }
+        }
+        
+        /* Reset and base styles */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+        
+        body {
+            font-family: var(--font-family-sans);
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--background);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Typography System */
+        .h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 1.1; }
+        .h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; line-height: 1.2; }
+        .h3 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; line-height: 1.3; }
+        .h4 { font-size: clamp(1.25rem, 2.5vw, 1.5rem); font-weight: 500; line-height: 1.4; }
+        
+        .text-lg { font-size: 1.125rem; }
+        .text-sm { font-size: 0.875rem; }
+        .text-xs { font-size: 0.75rem; }
+        
+        .font-mono { font-family: var(--font-family-mono); }
+        .font-roboto { font-family: var(--font-family-roboto); }
+        .font-medium { font-weight: 500; }
+        .font-semibold { font-weight: 600; }
+        .font-bold { font-weight: 700; }
+        
+        .text-primary { color: var(--text-primary); }
+        .text-secondary { color: var(--text-secondary); }
+        .text-muted { color: var(--text-muted); }
+        
+        /* Layout Components */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        .section {
+            padding: 6rem 0;
+        }
+        
+        .section:nth-child(even) {
+            background-color: var(--surface);
+        }
+        
+        /* Skip Links for Accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--primary-color);
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: var(--border-radius-sm);
+            z-index: 1000;
+        }
+        
+        .skip-link:focus {
+            top: 6px;
+        }
+        
+        /* Header and Navigation */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            transition: var(--transition-normal);
+        }
+        
+        .dark .header {
+            background: rgba(32, 33, 36, 0.95);
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo-icon {
+            background: var(--primary-color);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition-fast);
+            padding: 0.5rem 0;
+        }
+        
+        .nav-link:hover,
+        .nav-link:focus {
+            color: var(--primary-color);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: var(--transition-fast);
+        }
+        
+        .nav-link:hover::after,
+        .nav-link:focus::after {
+            width: 100%;
+        }
+        
+        /* Mobile Navigation Toggle */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            border: none;
+            background: none;
+        }
+        
+        .nav-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-primary);
+            margin: 3px 0;
+            transition: var(--transition-fast);
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--background) 0%, var(--surface) 100%);
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2364748b' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            z-index: -1;
+        }
+        
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .hero-text {
+            animation: slideInUp 0.8s ease-out;
+        }
+        
+        .hero-title {
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            max-width: 90%;
+        }
+        
+        .hero-visual {
+            position: relative;
+            animation: slideInRight 0.8s ease-out 0.3s both;
+        }
+        
+        .hero-card {
+            background: var(--surface);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border);
+            font-family: var(--font-family-mono);
+            font-size: 0.875rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--secondary-color));
+        }
+        
+        .code-line {
+            margin: 0.5rem 0;
+            animation: typewriter 3s steps(40) infinite;
+        }
+        
+        .code-keyword { color: var(--primary-color); }
+        .code-string { color: var(--success); }
+        .code-comment { color: var(--text-muted); font-style: italic; }
+        
+        /* CTA Buttons */
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 2rem;
+            border-radius: var(--border-radius-md);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition-fast);
+            border: 2px solid transparent;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-secondary:hover,
+        .btn-secondary:focus {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .skill-card {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+            transition: var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transform: scaleX(0);
+            transition: var(--transition-normal);
+        }
+        
+        .skill-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .skill-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: var(--border-radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .skill-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .skill-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        /* Project Showcase */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .project-card {
+            background: var(--surface);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+            transition: var(--transition-normal);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .project-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .project-image-content {
+            font-size: 3rem;
+            opacity: 0.8;
+            color: white;
+        }
+        
+        .project-content {
+            padding: 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .project-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tech-tag {
+            background: var(--background);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--border-radius-sm);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: auto;
+        }
+        
+        .project-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: var(--transition-fast);
+        }
+        
+        .project-link:hover {
+            color: var(--primary-dark);
+        }
+        
+        /* Contact Form */
+        .contact-form {
+            max-width: 600px;
+            margin: 3rem auto 0;
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: var(--border-radius-md);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition-fast);
+            background: var(--background);
+            color: var(--text-primary);
+        }
+        
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--text-primary);
+            color: white;
+            padding: 3rem 0 1rem;
+            text-align: center;
+        }
+        
+        .footer-content {
+            margin-bottom: 2rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+        
+        .social-link:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        .footer-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.875rem;
+        }
+        
+        /* Google-inspired floating action button */
+        .fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition-fast);
+            z-index: 99;
+            text-decoration: none;
+            font-size: 1.5rem;
+        }
+        
+        .fab:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes typewriter {
+            0%, 50% { border-right: 2px solid var(--primary-color); }
+            51%, 100% { border-right: 2px solid transparent; }
+        }
+        
+        /* Performance badge */
+        .perf-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--success);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--border-radius-sm);
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--background);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: var(--shadow-lg);
+                border-top: 1px solid var(--border);
+            }
+            
+            .nav-toggle {
+                display: flex;
+            }
+            
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .hero-visual {
+                order: -1;
+            }
+            
+            .hero-subtitle {
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .section {
+                padding: 4rem 0;
+            }
+            
+            .cta-group {
+                justify-content: center;
+            }
+            
+            .skills-grid,
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .hero-card {
+                padding: 1rem;
+            }
+            
+            .skill-card,
+            .contact-form {
+                padding: 1.5rem;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            .header,
+            .nav-toggle,
+            .cta-group,
+            .contact-form,
+            .fab,
+            .footer {
+                display: none;
+            }
+            
+            .section {
+                padding: 2rem 0;
+                page-break-inside: avoid;
+            }
+            
+            .hero {
+                min-height: auto;
+                padding: 2rem 0;
+            }
+            
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-visual {
+                display: none;
+            }
+            
+            * {
+                color: black !important;
+                background: white !important;
+            }
+        }
+        
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            :root {
+                --border: #000000;
+                --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.3);
+                --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.3);
+            }
+        }
+        
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            html {
+                scroll-behavior: auto;
+            }
+        }
+        
+        /* Theme toggle */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: auto;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+        
+        .theme-toggle input {
+            display: none;
+        }
+        
+        .theme-toggle .slider {
+            width: 40px;
+            height: 20px;
+            background: var(--text-muted);
+            border-radius: 10px;
+            position: relative;
+            transition: var(--transition-fast);
+        }
+        
+        .theme-toggle .slider:before {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: white;
+            top: 2px;
+            left: 2px;
+            transition: var(--transition-fast);
+        }
+        
+        .theme-toggle input:checked + .slider {
+            background: var(--primary-color);
+        }
+        
+        .theme-toggle input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+        
+        /* Performance graph */
+        .perf-graph {
+            width: 100%;
+            height: 120px;
+            background: var(--surface);
+            border-radius: var(--border-radius-md);
+            margin-top: 1rem;
+            display: flex;
+            align-items: flex-end;
+            padding: 0.5rem;
+            gap: 0.5rem;
+        }
+        
+        .perf-bar {
+            flex: 1;
+            background: var(--primary-color);
+            border-radius: var(--border-radius-sm);
+            position: relative;
+        }
+        
+        .perf-bar:nth-child(1) { height: 95%; background: var(--primary-color); }
+        .perf-bar:nth-child(2) { height: 98%; background: var(--secondary-color); }
+        .perf-bar:nth-child(3) { height: 92%; background: var(--accent-color); }
+        .perf-bar:nth-child(4) { height: 100%; background: var(--success); }
+        
+        .perf-label {
+            position: absolute;
+            bottom: -1.5rem;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip Links for Screen Readers -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header with Navigation -->
+    <header class="header" role="banner">
+        <nav class="nav" role="navigation" aria-label="Main navigation">
+            <a href="#home" class="logo" aria-label="Alex Morgan - Frontend Engineer">
+                <span class="logo-icon">AM</span>
+                <span>Alex Morgan</span>
+            </a>
+            <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li class="theme-toggle">
+                    <label>
+                        <input type="checkbox" id="theme-toggle">
+                        <span class="slider"></span>
+                    </label>
+                    <span>Dark Mode</span>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section id="home" class="hero section" role="banner">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <span class="perf-badge">🚀 100/100 Lighthouse Score</span>
+                        <h1 class="hero-title h1">Senior Frontend Engineer</h1>
+                        <p class="hero-subtitle">Building lightning-fast, accessible web experiences that scale. Passionate about modern web standards, performance optimization, and inclusive design.</p>
+                        <div class="cta-group">
+                            <a href="#projects" class="btn btn-primary">View My Work</a>
+                            <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="hero-card">
+                            <div class="code-line"><span class="code-keyword">const</span> <span class="code-string">developer</span> = {</div>
+                            <div class="code-line">  name: <span class="code-string">'Alex Morgan'</span>,</div>
+                            <div class="code-line">  role: <span class="code-string">'Senior Frontend Engineer'</span>,</div>
+                            <div class="code-line">  skills: [<span class="code-string">'Performance'</span>, <span class="code-string">'A11y'</span>, <span class="code-string">'Modern CSS'</span>],</div>
+                            <div class="code-line">  passionate: <span class="code-keyword">true</span>,</div>
+                            <div class="code-line">  <span class="code-comment">// Always learning</span></div>
+                            <div class="code-line">};</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="h2" style="text-align: center; margin-bottom: 3rem;">About Me</h2>
+                <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                    <p class="text-lg text-secondary" style="margin-bottom: 2rem;">
+                        I'm a Senior Frontend Engineer with over 8 years of experience crafting performant, accessible web applications. My expertise spans modern JavaScript frameworks, advanced CSS techniques, and web performance optimization.
+                    </p>
+                    <p class="text-secondary">
+                        When I'm not coding, you'll find me contributing to open source projects, writing technical articles, or exploring the latest web technologies. I believe in building inclusive digital experiences that work for everyone, everywhere.
+                    </p>
+                    
+                    <div class="perf-graph">
+                        <div class="perf-bar"><span class="perf-label">Performance</span></div>
+                        <div class="perf-bar"><span class="perf-label">Accessibility</span></div>
+                        <div class="perf-bar"><span class="perf-label">Best Practices</span></div>
+                        <div class="perf-bar"><span class="perf-label">SEO</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="section">
+            <div class="container">
+                <h2 class="h2" style="text-align: center; margin-bottom: 1rem;">Core Expertise</h2>
+                <p class="text-lg text-secondary" style="text-align: center; margin-bottom: 3rem;">Technologies and methodologies I use to build exceptional web experiences</p>
+                
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <div class="skill-icon">🚀</div>
+                        <h3 class="skill-title">Performance Optimization</h3>
+                        <p class="skill-description">Expert in Core Web Vitals, bundle optimization, lazy loading, and advanced caching strategies. Consistently deliver sub-2s load times.</p>
+                    </div>
+                    
+                    <div class="skill-card">
+                        <div class="skill-icon">♿</div>
+                        <h3 class="skill-title">Web Accessibility</h3>
+                        <p class="skill-description">WCAG 2.1 AA compliance specialist. Screen reader testing, keyboard navigation, and inclusive design principles.</p>
+                    </div>
+                    
+                    <div class="skill-card">
+                        <div class="skill-icon">🎨</div>
+                        <h3 class="skill-title">Modern CSS & Design Systems</h3>
+                        <p class="skill-description">CSS Grid, Flexbox, Custom Properties, and component-based architecture. Building scalable design systems.</p>
+                    </div>
+                    
+                    <div class="skill-card">
+                        <div class="skill-icon">⚛️</div>
+                        <h3 class="skill-title">Frontend Frameworks</h3>
+                        <p class="skill-description">React, Vue, TypeScript, and modern build tools. Focus on maintainable, testable code architecture.</p>
+                    </div>
+                    
+                    <div class="skill-card">
+                        <div class="skill-icon">📱</div>
+                        <h3 class="skill-title">Responsive Design</h3>
+                        <p class="skill-description">Mobile-first approach, progressive enhancement, and cross-browser compatibility. Works on every device.</p>
+                    </div>
+                    
+                    <div class="skill-card">
+                        <div class="skill-icon">🔧</div>
+                        <h3 class="skill-title">Developer Experience</h3>
+                        <p class="skill-description">Build tooling, CI/CD pipelines, automated testing, and development workflow optimization.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <div class="container">
+                <h2 class="h2" style="text-align: center; margin-bottom: 1rem;">Featured Projects</h2>
+                <p class="text-lg text-secondary" style="text-align: center; margin-bottom: 3rem;">A selection of recent work showcasing technical excellence and user-focused design</p>
+                
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-image">
+                            <div class="project-image-content">⚡</div>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Performance Analytics Dashboard</h3>
+                            <p class="project-description">A real-time dashboard for monitoring web performance metrics across multiple platforms and devices.</p>
+                            <div class="tech-tags">
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">TypeScript</span>
+                                <span class="tech-tag">WebSockets</span>
+                                <span class="tech-tag">Chart.js</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link">Live Demo</a>
+                                <a href="#" class="project-link">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-image">
+                            <div class="project-image-content">🌐</div>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Accessibility Compliance Platform</h3>
+                            <p class="project-description">Comprehensive tool for auditing and improving web accessibility with detailed reports and recommendations.</p>
+                            <div class="tech-tags">
+                                <span class="tech-tag">Vue.js</span>
+                                <span class="tech-tag">Node.js</span>
+                                <span class="tech-tag">Axe Core</span>
+                                <span class="tech-tag">MongoDB</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link">Live Demo</a>
+                                <a href="#" class="project-link">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-image">
+                            <div class="project-image-content">📊</div>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Data Visualization Library</h3>
+                            <p class="project-description">Lightweight, zero-dependency library for creating accessible, responsive data visualizations.</p>
+                            <div class="tech-tags">
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">SVG</span>
+                                <span class="tech-tag">Web Components</span>
+                                <span class="tech-tag">CSS</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link">Live Demo</a>
+                                <a href="#" class="project-link">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container">
+                <h2 class="h2" style="text-align: center; margin-bottom: 1rem;">Get In Touch</h2>
+                <p class="text-lg text-secondary" style="text-align: center; margin-bottom: 3rem;">Have a project in mind or want to discuss opportunities? I'd love to hear from you</p>
+                
+                <div class="contact-form">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" id="name" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject" class="form-label">Subject</label>
+                        <input type="text" id="subject" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea id="message" class="form-textarea" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <h3 style="margin-bottom: 1rem; font-size: 1.5rem;">Alex Morgan</h3>
+                <p style="margin-bottom: 2rem; color: rgba(255, 255, 255, 0.8); max-width: 500px; margin-left: auto; margin-right: auto;">
+                    Senior Frontend Engineer passionate about building fast, accessible, and delightful web experiences.
+                </p>
+                
+                <div class="social-links">
+                    <a href="https://github.com/alexmorgan" class="social-link" aria-label="GitHub Profile" rel="noopener noreferrer" target="_blank">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                    <a href="https://linkedin.com/in/alexmorgan" class="social-link" aria-label="LinkedIn Profile" rel="noopener noreferrer" target="_blank">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                    <a href="https://twitter.com/alexmorgan" class="social-link" aria-label="Twitter Profile" rel="noopener noreferrer" target="_blank">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+                    <a href="mailto:alex@example.com" class="social-link" aria-label="Email Contact">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <p class="footer-text">© 2025 Alex Morgan. All rights reserved.</p>
+                    <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+                        <a href="#privacy" style="color: rgba(255, 255, 255, 0.7); text-decoration: none; font-size: 0.875rem; transition: var(--transition-fast);">Privacy Policy</a>
+                        <a href="#terms" style="color: rgba(255, 255, 255, 0.7); text-decoration: none; font-size: 0.875rem; transition: var(--transition-fast);">Terms of Service</a>
+                        <a href="#accessibility" style="color: rgba(255, 255, 255, 0.7); text-decoration: none; font-size: 0.875rem; transition: var(--transition-fast);">Accessibility</a>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 1rem; text-align: center;">
+                    <p style="color: rgba(255, 255, 255, 0.5); font-size: 0.75rem;">
+                        Built with semantic HTML, modern CSS, and zero JavaScript for maximum performance and accessibility.
+                        <br>
+                        <span style="color: rgba(255, 255, 255, 0.7);">♿ WCAG 2.1 AA Compliant • 🚀 100/100 Lighthouse Score • 📱 Mobile First • 🌐 Progressive Enhancement</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating action button -->
+    <a href="#home" class="fab" aria-label="Back to top">↑</a>
+    
+    <!-- Schema.org structured data for better SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Alex Morgan",
+        "jobTitle": "Senior Frontend Engineer",
+        "description": "Senior Frontend Engineer specializing in performance optimization, accessibility, and scalable web applications.",
+        "url": "https://alexmorgan.dev",
+        "sameAs": [
+            "https://github.com/alexmorgan",
+            "https://linkedin.com/in/alexmorgan",
+            "https://twitter.com/alexmorgan"
+        ],
+        "knowsAbout": [
+            "Frontend Development",
+            "Web Performance",
+            "Accessibility",
+            "JavaScript",
+            "CSS",
+            "React",
+            "Vue.js"
+        ],
+        "alumniOf": {
+            "@type": "Organization",
+            "name": "Computer Science Degree"
+        }
+    }
+    </script>
+</body>
+</html>
